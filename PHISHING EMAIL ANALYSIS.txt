@@ -1,0 +1,89 @@
+PHISHING EMAIL ANALYSIS 
+
+DATE: November 14, 2025
+PURPOSE: Learn to spot phishing emails safely. Use sample files only and do not open real suspicious emails!
+
+Things to keep in mind:
+- Never click links or open attachments in real emails.
+- Working in a safe folder as I have stored in E:\Isolated\.
+- Delete samples after analysis.
+
+TOOLS YOU NEED (FREE):
+- Notepad++ (download: notepad-plus-plus.org) - for viewing .eml files.
+- Chrome or Firefox or Edge or any browser - drag .eml file into browser for real time view.
+- MX Toolbox Header Analyzer or Google Email Header analyzer: https://mxtoolbox.com/EmailHeaders.aspx - Paste headers here to check fake or real.
+
+SAMPLE DOWNLOADS:
+- GitHub Repo: https://github.com/rf-peixoto/phishing_pot - Free real phishing .eml files (for education only).
+  - Go to: https://github.com/rf-peixoto/phishing_pot/tree/main/email
+  - Click any .eml file → "Download" or "Raw" → Save as "sample.eml".
+  - Examples: Bradesco, PayPal fakes. Anonymized - safe.
+- Other safe sites: keepnetlabs.com/phishing-examples (search "2025 samples").
+
+-------------------------------------------------
+THE 8 EASY STEPS TO ANALYZE ANY PHISHING EMAIL
+-------------------------------------------------
+STEP 1: GET A SAMPLE EMAIL
+- Download from above links (e.g., phishing_pot/email folder).
+- Save as: sample.eml in E:\Isolated\.
+- Open in Notepad++ (UTF-8 encoding). If garbled: File > Encoding > UTF-8.
+- Test: Scroll top - see "From:" line? Good!
+
+STEP 2: CHECK SENDER (IS IT FAKE?)
+- In Notepad++: Find "From:" line (top).
+  - Example: From: "Bank" <fake@ gmail.com>
+- Ask: Matches real bank? (e.g., Real Bradesco: @bradesco.com.br)
+- Red flag: Free email like @gmail.com or weird domain.
+- Note: "Sender: fake@gmail.com - SPOOFED!"
+
+STEP 3: CHECK HEADERS (HIDDEN CLUES?)
+- In Notepad++: Copy TOP to FIRST BLANK LINE (headers only).
+- Paste into: https://mxtoolbox.com/EmailHeaders.aspx → "Analyze Headers".
+- Look for:
+  - SPF/DKIM: "Fail" or "None" = BAD.
+  - IP: Click IPs - Wrong country? (e.g., USA for Brazilian bank).
+  - Hops: Too few (1-2) = Forged.
+- Note: "Headers: SPF Fail, IP in USA - FORGED!"
+
+STEP 4: FIND LINKS OR ATTACHMENTS
+- Scroll to body (after blank line).
+- In browser view (drag .eml to Chrome): Look for blue links/buttons.
+- Hover links - copy URL (don't click!).
+- Attachments? Note name - scan at virustotal.com (upload safely).
+- Red flag: Fake domain (e.g., bank-login-fake.com).
+- Note: "Links: fake-site.com - DANGEROUS!"
+
+STEP 5: SPOT URGENT WORDS
+- Read body: Words like "URGENT", "EXPIRES TODAY", "ACT NOW"?
+- Example: "Points expiring in 24 hours!"
+- Red flag: Pushes you to click fast, no proof.
+- Note: "Urgency: 'Expiring today' - PANIC TRICK!"
+
+STEP 6: CHECK HIDDEN LINKS
+- In browser: Hover over links/buttons.
+- Compare: What it says vs. real URL.
+  - Example: Button "Login" → real: evil.com
+- Paste URL to urlscan.io (safe preview).
+- Note: "Mismatch: Looks safe, goes to fake site."
+
+STEP 7: LOOK FOR ERRORS
+- Read body: Finding any Typos? Bad grammar? Weird spelling?
+  - Example: "Verfy now" or run-on sentences.
+- Paste to grammarly.com (free).
+- Red flag: Professionals don't mess up.
+- Note: "Errors: Typos like 'LIVEL O' - AMATEUR!"
+
+STEP 8: MAKE YOUR REPORT
+- Quick table in Notepad:
+
+| Step | What I Found | Why It's Phishing |
+|------|--------------|-------------------|
+| 2    | Fake sender  | Wrong domain      |
+| 3    | SPF Fail     | Forged headers    |
+| 4    | Fake link    | Steals info       |
+| 5    | Urgent words | Makes you panic   |
+| 6    | URL hide     | Tricks eyes       |
+| 7    | Typos        | Sloppy scam       |
+
+- Verdict: "High risk - DELETE & REPORT!"
+- Report to: abuse@realbank.com or phishing.org.

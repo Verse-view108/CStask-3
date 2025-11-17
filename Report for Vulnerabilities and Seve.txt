@@ -1,0 +1,17 @@
+Report for Vulnerabilities and Severity
+
+I have used the tool Nessus Essentials for the Vulnerability scan. My Basic Network Scan (target: 10.31.187.41) completed in ~25 minutes. Nessus checked 50,000+ plugins against my system, focusing on ports, services, and configs.
+Here's the severity breakdown from the dashboard:
+Severity   Count     % of    Total Description & Risk Summary
+Critical    0         0%      No remote code execution or zero-day exploits detected. Excellent—your system isn't vulnerable to immediate attacks like ransomware.
+High        0         0%      No high-impact issues(e.g., weak encryption enabling data theft).
+Medium      1         1%      Single finding: "SSL/TLS Multiple Issues" (12 sub-instances, CVSS ~5.0). Minor config flag; low real-world exploitability on localhost/home setups.
+Low         0         0%      No low-risk items (e.g., info leaks).
+Info       158        99%     Normal detections: Open ports (e.g., 135 RPC, 445 SMB), OS fingerprinting (Windows 11), service banners (e.g., HTTP on 80). These aren't vulns—just visibility 			      into your running services.
+
+Overall Assessment:
+- Risk Level: Low or negligible. My PC is well-protected, mostly because of Windows 11's default settings and recent updates.
+- Scan Summary: The scan checked 1,024 TCP ports and found only 15 open, all used by local services like file sharing (SMB). No signs of malware or known security issues.
+- Scan Details: It was done in unauthenticated mode (no login details given), so it couldn’t check deeper things like user permissions. Next time, I should add my Windows login for a more complete scan.
+- Strengths: My system is up to date, remote access (RDP/SSH) is not exposed, and the firewall blocks outside scans.
+- Weak Spots: One medium-risk warning is likely a false alarm—TLS 1.0/1.1 are shown as available, but they’re actually turned off by default in Windows 11 version 24H2 and later.

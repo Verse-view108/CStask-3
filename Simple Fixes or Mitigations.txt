@@ -1,0 +1,75 @@
+Simple Fixes or Mitigations for Found Vulnerabilities
+
+One Actionable Finding: Medium Risk (TLS 1.0/1.1)
+
+I found only one issue during the scan. I checked trusted sources like Microsoft docs, Tenable guides, and Reddit sysadmin threads. On my Windows 11 Insider build, TLS 1.0 and 1.1 are already disabled across the system because of Microsoft’s 2024 policy. So, there’s no real risk.
+
+The Nessus scanner flagged it because my system still advertises TLS 1.0/1.1 during handshake, even though it doesn’t actually use them. Modern apps like Edge and Chrome only use TLS 1.2 or higher, so I’m safe.
+
+Simple Fix (Optional, Takes 5–10 Minutes)
+
+If I want to remove the warning from Nessus, I can do one of these:
+
+Method 1: Registry Edit (Recommended)
+
+This matches what I discussed earlier. It stops the system from advertising TLS 1.0/1.1.
+
+1. Open "regedit" as Administrator.
+2. Go to:  
+   `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols`
+3. Right-click **Protocols** > New > Key > Name it `TLS 1.0`
+4. Inside TLS 1.0:
+   - Create a new key called `Client`
+     - Inside Client: New DWORD (32-bit) > Name: `Enabled` > Value: `0`
+     - Also add `DisabledByDefault` DWORD > Value: `1`
+   - Create a new key called `Server`
+     - Inside Server: Same as above
+
+5. Repeat the same steps for `TLS 1.1` (Client and Server).
+6. Reboot my PC.
+7. Run the Nessus scan again — the Medium warning should disappear.
+
+Why this is easy: No software needed. I can undo it anytime by changing values back to `1`.
+
+Method 2: PowerShell Script (Faster for Multiple PCs)
+
+Run this as Administrator:
+
+```powershell
+New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client" -Force
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client" -Name "Enabled" -Value 0 -PropertyType DWORD
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client" -Name "DisabledByDefault" -Value 1 -PropertyType DWORD
+```
+
+Repeat for:
+- TLS 1.0 Server
+- TLS 1.1 Client
+- TLS 1.1 Server
+
+Then restart my PC.
+
+Method 3: IIS Crypto Tool (Easiest with GUI)
+
+- Download IIS Crypto from Nartac Software (safe and trusted).
+- Run it, click Best Practices, then Apply.
+- Reboot my PC.
+
+This tool auto-disables old TLS versions and weak ciphers like RC4 and 3DES.
+
+If I Don’t Fix It
+
+- Just use modern browsers (avoid old Internet Explorer).
+- Turn on **strict mode** in Windows Firewall to block downgrade attacks.
+- Run Nessus scans every few months — future updates may mark this as “Info” instead of “Medium.”
+
+Risk after fix: Zero. No known attacks on Windows 11 for this issue. Older CVEs like POODLE don’t apply here.
+
+Info-Level Findings
+
+No action needed. But if I want to clean up:
+
+- Example: Close port 445 if I don’t use SMB file sharing:
+
+'''cmd
+netsh advfirewall firewall add rule name="Block SMB" dir=in action=block protocol=TCP localport=445
+'''
