@@ -24,9 +24,9 @@
 
 - Critical: 0  
 - High: 0  
-- Medium: 0 ✅
+- Medium: 0 
 
-## 📁 Saved Files
+##  Saved Files
 
 - Exported **PDF report**
 - Took **screenshots** of scan and registry changes
